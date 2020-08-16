@@ -1,4 +1,7 @@
 var body = document.body
+var masterHolder = document.getElementById("masterHolder");
+var scoreBoard = document.getElementById("scoreBoard");
+var retryQuiz = document.getElementById("retryQuiz");
 var score = document.getElementById("score");
 var quizTimer = document.getElementById("quizTimer");
 var asker = document.getElementById("asker")
@@ -13,33 +16,74 @@ var btn3Text = document.getElementById("btn3Text");
 var btn4Text = document.getElementById("btn4Text");
 var submit = document.getElementById("nextButton");
 var correct = document.getElementById("correct");
+var incorrect = document.getElementById("incorrect");
 var questionNumber = document.getElementById("codeQuiz");
 var userChoice = undefined;
 let i = 0;
-let gameStatus = undefined;
+let quizStatus = undefined;
 var userScore = 0;
-var seconds = 180;
+var seconds = 120;
 var timer = setInterval(quizTime, 1000);
+var clearReward = setInterval(hidecorrect, 2000);
+var clearPenalty = setInterval(hideincorrect, 2000);
+var endScore = [];
+var userIntials ="";
+var user = document.getElementById("user")
+var userCompletion = document.getElementById("userCompletion")
+
+//arrays with the questions and answers
+let questions = [
+    "What is the best tool for checking if your JS code is working?",
+    "Which is NOT a type of Pop up box available in JS?",
+    "How do you add a comment or comment out code when using javascript?",
+    "Which is a JavaScript data type?"
+];
+
+let answersToQuestion1 =["/help", "get someone else to check it", "console.log()", "(document) (.getelement) (byId)"]; //  3 is correct
+let answersToQuestion2 =["alert","confirm", "prompt", "alarm"]; //  4 is correct
+let answersToQuestion3 =["<!-- -->", "// ", ".comment", "'this is a comment'"]; //  2 is correct
+let answersToQuestion4 =["undefined", "function", "for loop", "null"]; //  1 is correct
+let questionLocation = ["Question 1:", "Question 2:", "Question 3:", "Question 4:"];
+
+//listen to buttons and give a value
+btn1.addEventListener('click',function(){
+    userChoice = 1;
+})
+btn2.addEventListener('click',function(){
+    userChoice = 2;
+})
+btn3.addEventListener('click',function(){
+    userChoice = 3;
+})
+btn4.addEventListener('click', function(){
+    userChoice = 4;
+})
+
+submit.addEventListener('click', submitAnswer);
+
+retryQuiz.addEventListener('click', function(){location.reload();});
 
 // quiz status
-if (gameStatus == true){
+if (quizStatus == true){
     quizTime();
     showQuizTimer();
-} else if (gameStatus == false){
+} else if (quizStatus == false){
     stopQuizTime();
+    seconds = 0;
 };
 
 //This is the timer for the Quiz
 function quizTime(){
     quizTimer.innerText = ("Timer: " + seconds);
     seconds--;
-    if (!seconds){
+    if (seconds === 0 || seconds < 0){
         clearInterval(timer)
         seconds = 0;
-        // gameStatus = false;
+        quizStatus = false;
+        gameEnd();
+        console.log(quizStatus);
     };
-    console.log(quizTimer)
-    // console.log(seconds);
+    
 };
 
 //stop the quiz time
@@ -53,32 +97,23 @@ function penalty(){
     for(b = 0; b < 30; b++){
         seconds--;
     }
+    showincorrect();
 };
 
-//array with the questions
-let questions = [
-    "What is the best tool for checking if your JS code is working?",
-    "Which is NOT a type of Pop up box available in JS?",
-    "How do you add a comment or comment out code when using javascript?",
-    "Which is a JavaScript data type?"
-];
-
-let answersToQuestion1 =["/help", "get someone else to check it", "console.log()", "(document) (.getelement) (byId)"]; //  3 is correct
-let answersToQuestion2 =["alert","confirm", "prompt", "alarm"]; //  4 is correct
-let answersToQuestion3 =["<!-- -->", "// ", ".comment", "'this is a comment'"]; //  2 is correct
-let answersToQuestion4 =["undefined", "function", "for loop", "null"]; //  1 is correct
-let questionLocation = ["Question 1:", "Question 2:", "Question 3:", "Question 4:"];
+// adding to the score for the user and reward
 function addToScore(){
-    userScore++
+    for (a = 0; a < 25; a++){
+        userScore++
+    };
     console.log(userScore)
-    score.innerText = "Score: " + userScore
-}
+    score.innerText = "Score: " + userScore;
+};
 
 startButton.addEventListener('click', startQuiz)
 // when the start button is pushed
 function startQuiz(){
-      seconds = 180;
-      gameStatus = true;
+      seconds = 120;
+      quizStatus = true;
       questionNumber.innerText = questionLocation[0]
       asker.innerText = questions[i]
       btn1Text.innerText = answersToQuestion1[0]
@@ -94,31 +129,13 @@ function startQuiz(){
       shownextButton();
   };
 
-btn1.addEventListener('click',function(){
-    userChoice = 1;
-    console.log(userChoice)
-})
-btn2.addEventListener('click',function(){
-    userChoice = 2;
-    console.log(userChoice)
-})
-btn3.addEventListener('click',function(){
-    userChoice = 3;
-    console.log(userChoice)
-})
-btn4.addEventListener('click', function(){
-    userChoice = 4;
-    console.log(userChoice)
-})
 
-submit.addEventListener('click', submitAnswer);
 
 function submitAnswer(){
 
     //logic for question 1//
     
     if(i === 0 && userChoice === 3){
-        alert("You are correct")
         showcorrect();
         i++
         questionNumber.innerText = questionLocation[1]
@@ -128,11 +145,9 @@ function submitAnswer(){
         btn3Text.innerText = answersToQuestion2[2]
         btn4Text.innerText = answersToQuestion2[3]
         userChoice = undefined;
-        console.log(userChoice)
+
         addToScore();
     } else if(i === 0 && userChoice < 3){
-        // alert("you are incorrect")
-        //subtract from timer
         penalty();
         i++
         questionNumber.innerText = questionLocation[1]
@@ -143,9 +158,7 @@ function submitAnswer(){
         btn4Text.innerText = answersToQuestion2[3]
         userChoice = undefined;
     }
-    else if(i === 0 && userChoice > 3){
-        // alert("you are incorrect")
-        //subtract from timer
+    else if(i === 0 && userChoice > 3){       
         penalty();
         i++
         questionNumber.innerText = questionLocation[1]
@@ -161,7 +174,7 @@ function submitAnswer(){
   //logic for question 2//
 
     if(i === 1 && userChoice === 4){
-        // alert("You are correct")
+        showcorrect();
         i++
         questionNumber.innerText = questionLocation[2]
         asker.innerText = questions[i]
@@ -172,8 +185,7 @@ function submitAnswer(){
         userChoice = undefined;
         addToScore();
     } else if(i === 1 && userChoice < 4){
-        // alert("you are incorrect")
-        //subtract from timer
+        penalty();
         i++
         questionNumber.innerText = questionLocation[2]
         asker.innerText = questions[i]
@@ -187,7 +199,7 @@ function submitAnswer(){
     //logic for question 3//
 
     if(i === 2 && userChoice === 2){
-        alert("You are correct")
+        showcorrect();
         i++
         questionNumber.innerText = questionLocation[3]
         asker.innerText = questions[i]
@@ -196,11 +208,9 @@ function submitAnswer(){
         btn3Text.innerText = answersToQuestion4[2]
         btn4Text.innerText = answersToQuestion4[3]
         userChoice = undefined;
-        console.log(userChoice)
         addToScore();
     } else if(i === 2 && userChoice < 2){
-        // alert("you are incorrect")
-        //subtract from timer
+        penalty();
         i++
         questionNumber.innerText = questionLocation[3]
         asker.innerText = questions[i]
@@ -209,11 +219,9 @@ function submitAnswer(){
         btn3Text.innerText = answersToQuestion4[2]
         btn4Text.innerText = answersToQuestion4[3]
         userChoice = undefined;
-        gameStatus = false;
     }
     else if(i === 2 && userChoice > 2){
-        // alert("you are incorrect")
-        //subtract from timer
+        penalty();
         i++
         questionNumber.innerText = questionLocation[3]
         asker.innerText = questions[i]
@@ -222,50 +230,60 @@ function submitAnswer(){
         btn3Text.innerText = answersToQuestion4[2]
         btn4Text.innerText = answersToQuestion4[3]
         userChoice = undefined;
-        gameStatus = false;
     };
 
    //logic for question 4//
 
    if(i === 3 && userChoice === 1){
-    // alert("You are correct")
+    showcorrect();
     i++
-    //hide everything display leaderboard
     userChoice = undefined;
-    console.log(userChoice)
     addToScore();
-    gameStatus = false;
+   gameEnd();
     } 
     else if(i === 3 && userChoice > 1){
-    // alert("you are incorrect")
-    //hide everything display leaderboard
-    //subtract from timer
-    gameStatus = false;
-    i++
+     i++   
+    penalty();
     userChoice = undefined;
+    gameEnd();
     };
 };
-// LOCATION.RELOAD to reload the page
+if(i === 4){
+    quizStatus = false;
+};
+
+function gameEnd(){
+//clear the screen of everything
+masterHolder.innerHTML = "";
+//prompt user for initals
+var userInput = prompt("You did great! add your initials to the scoreboard!")
+userIntials += userInput
+user.innerText = userIntials;
+userCompletion.innerHTML = userScore
+//show leaderboard and try again button
+showScoreboard();
+showRetryQuiz();
+}
+
 // functions to hide buttons
-
-
-
 function hidebtn1(){btn1.style.visibility = "hidden";}
 function hidebtn2(){btn2.style.visibility = "hidden";}
  function hidebtn3(){btn3.style.visibility = "hidden";}
  function hidebtn4(){btn4.style.visibility = "hidden";}
  function hidenextButton(){nextButton.style.visibility = "hidden";}
-
  function hidestartButton(){startButton.style.visibility = "hidden";}
+ function hidecorrect(){correct.style.visibility = "hidden";};
+ function hideincorrect(){incorrect.style.visibility = "hidden";};
 
 //  functions to show buttons
-
-function showbtn1(){ btn1.style.visibility = "visible";}
- function showbtn2(){ btn2.style.visibility = "visible";}
-  function showbtn3(){btn3.style.visibility = "visible";}
-  function showbtn4(){btn4.style.visibility = "visible";}
-  function showstartButton(){startButton.style.visibility = "visible";}
-  function shownextButton(){nextButton.style.visibility = "visible";}
-  function showQuizTimer(){quizTimer.style.visibility = "visible";}
-  function showcorrect(){
-      setInterval(function(){correct.style.visibility = "visible"; }, 1000)};
+function showbtn1(){ btn1.style.visibility = "visible";};
+ function showbtn2(){ btn2.style.visibility = "visible";};
+  function showbtn3(){btn3.style.visibility = "visible";};
+  function showbtn4(){btn4.style.visibility = "visible";};
+  function showstartButton(){startButton.style.visibility = "visible";};
+  function shownextButton(){nextButton.style.visibility = "visible";};
+  function showQuizTimer(){quizTimer.style.visibility = "visible";};
+  function showcorrect(){correct.style.visibility = "visible";};
+  function showincorrect(){incorrect.style.visibility = "visible";};
+  function showScoreboard(){scoreBoard.style.visibility = "visible";};
+  function showRetryQuiz(){retryQuiz.style.visibility = "visible";};

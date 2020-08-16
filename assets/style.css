@@ -1,15 +1,38 @@
 body{
-    background-color: #2bb7e2;
+    background-image: url(https://i2.wp.com/www.cssscript.com/wp-content/uploads/2019/01/Create-A-Background-Particles-System-With-JavaScript-And-Canvas-nodes.js.png?fit=512%2C369&ssl=1);
+    background-color: lightblue;
+   
 }
 
 #asker{
+    color: rgb(184, 184, 184);
+    font-size: 29px;
     text-align: center;
     font-weight: bold;
-    font-size: x-large;
+    background-color: rgba(55, 112, 145, 0.808);
 }
 
 #scoreTime{
-    background-color: lightgrey;
+    color: rgb(184, 184, 184);
+    background-color: rgba(55, 112, 145, 0.808);
+}
+
+#scoreBoard{
+    visibility: hidden;
+}
+
+#retryQuiz{
+    visibility: hidden;
+}
+
+#codeQuiz{
+    color: rgb(184, 184, 184);
+}
+#masterHolder{ 
+    background-color: mediumvioletred;
+    background-color: rgba(37, 78, 211, 0.438);
+    background-blend-mode: soft-light;
+    
 }
 
 #score{
@@ -25,6 +48,13 @@ body{
 
 #correct{
     color: lime;
+    visibility: hidden;
+    text-align: center;
+}
+
+#incorrect{
+    text-align: center;
+    color: red;
     visibility: hidden;
 }
 /* things that have to start hidden */
