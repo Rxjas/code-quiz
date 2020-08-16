@@ -1,4 +1,49 @@
 body{
-    background-color: blueviolet;
+    background-color: #2bb7e2;
 }
 
+#asker{
+    text-align: center;
+    font-weight: bold;
+    font-size: x-large;
+}
+
+#scoreTime{
+    background-color: lightgrey;
+}
+
+#score{
+    font-weight: bolder;
+    font-stretch: wider;
+}
+
+#quizTimer{
+    font-weight: bolder;
+    font-stretch: wider;
+    visibility: hidden;
+}
+
+#correct{
+    color: lime;
+    visibility: hidden;
+}
+/* things that have to start hidden */
+#btn1{
+visibility: hidden;
+}
+
+#btn2{
+    visibility: hidden;
+}
+
+#btn3{
+    visibility: hidden;
+}
+
+#btn4{
+    visibility: hidden;
+}
+
+#nextButton{
+    visibility: hidden;
+}

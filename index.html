@@ -13,37 +13,42 @@
   </head>
   <body>
       
-    <div class="container-sm border">
+    <div id="masterHolder" class="container-sm border">
         <!--score and timer-->
-        <div class="row border">
-            <div class="col-6 border"><p>Score</p></div>
-            <div class="col-6 border"><p class="text-right">timer:</p></div>
+        <div id="scoreTime" class="row border">
+            <div class="col-6 border"><p id="score">Score:</p></div>
+            <div class="col-6 border"><p id="quizTimer" class="text-right">Timer:</p></div>
     </div>
     <!--This is the header/title-->
-     <div class="row border mt-5 pb-2">
+     <div class="row border mt-2 pb-2">
             <div class="col-2 border"></div>
-            <div class="col-8 border"><h1 class="text-center">Code Quiz!</h1></div>
+            <div class="col-8 border"><h1 id="codeQuiz" class="text-center">Code Quiz!</h1></div>
             <div class="col-2 border"></div>
     </div>
     <!--explanation or question-->
     <div class="row border pb-3">
-        <div class="col-12 border"><p class="text-center font-weight-bold">Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis est repudiandae tenetur enim incidunt facilis sapiente. Consequatur ipsum ipsa, doloribus, expedita sit deleniti repudiandae quibusdam esse sapiente nostrum nobis velit!</p></div>
+        <div class="col-12 border"><p id="userQ" class="text-center font-weight-bold"><p id="asker">This quiz is made of multiple choice questions. You can spend as much time as you would like on the questions, but the quiz as a whole is on a timer. in addition you will not be able to go back or skip questions.Try your best and see where you get on the leaderboard.</p></div>
     </div>
     <!--buttons 1 and 2 -->
     <div class="row pb-4 border">
-        <div class="col-6 border"><button type="button" class="btn btn-primary btn-lg btn-block">Block level button</button></div>
-       <div class="col-6 border"><button type="button" class="btn btn-primary btn-lg btn-block">Block level button</button></div>
+        <div class="col-6 border"><button id="btn1" type="button" class="btn btn-primary btn-lg btn-block" value="1"><p id="btn1Text">Option 1</p></button></div>
+       <div class="col-6 border"><button id="btn2" type="button" class="btn btn-primary btn-lg btn-block" value="2"><p id="btn2Text">Option 2</p></button></div>
     </div>
     <!--start button-->
     <div class="row border pb-4">
-        <div class=col-12><button type="button" class="btn btn-secondary btn-lg btn-block">Block level button</button></div>
+        <div class=col-12><button id="startButton" type="button" class="btn btn-secondary btn-lg btn-block"><h5>START</h5></button></div>
     </div>
     <!--buttons 3 and 4-->
-    <div class="row pb-4 border">
-        <div class="col-6 border"><button type="button" class="btn btn-primary btn-lg btn-block">Block level button</button></div>
-       <div class="col-6 border"><button type="button" class="btn btn-primary btn-lg btn-block">Block level button</button></div>
+    <div class="row border">
+        <div class="col-6 border"><button id="btn3" type="button" class="btn btn-primary btn-lg btn-block" value="3"><p id="btn3Text">Option 3</p></button></div>
+       <div class="col-6 border"><button id="btn4" type="button" class="btn btn-primary btn-lg btn-block" value="4"><p id="btn4Text">Option 4</p></button></div>
     </div>
-
+    <!--this is the next button-->
+    <div class="row pt-1 border">
+        <div class="col-10 border"><h4 id="correct">You are correct!</h4></div>
+        <div class="col-3 border"><button id="nextButton" type="button" class="btn btn-info">SUBMIT</button></div>
+    </div>
+    
 
 
 
